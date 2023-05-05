@@ -1,0 +1,55 @@
+{% include 'top.html' %}
+
+<div class="content">
+    <div class="container">
+        <h1 class="title" align="center">Movies</h1>
+        <div class="search">
+            <form class="search-top" method="POST" action="{{url_for('list_movie')}}">
+                <input type="text" name="search" placeholder="Search Movies" autofocus>
+                <button class="flat" type="submit">Find</button>
+                <div class="clear"></div>
+            </form>
+        </div>
+        <table class="styled">
+            <thead>
+                <tr>
+				    <th>ID</th>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Avg Rating</th>
+                    <th>Genre</th>
+                    <th>Managed By</th>
+					<th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for i in movie %}
+                    <tr class='clickable-row' data-href="{{url_for('update_movie', movie_id=i.movie_id, title=i.title, releasedate=i.releasedate, avgrating=i.avgrating, staff=i.staff, genre=i.genre, description=i.description)}}" method="GET">
+					    <td>{{ i.movie_id }}</td>
+                        <td>{{ i.title }}</td>
+                        <td>{{ i.releasedate }}</td>
+                        <td>{{ i.avgrating }}</td>
+                        <td>{{ i.genre }}</td>
+                        <td>{{ i.staff }}</td>
+						<td>{{ i.description }}</td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" defer="defer"> jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+	$(".clickable-row").mouseover(function() {
+        $(this).css('background-color', '#eeeeee');
+    });
+	$(".clickable-row").mouseout(function() {
+        $(this).css('background-color', 'white');
+    });
+
+});
+</script>
+
+{% include 'bottom.html' %}
