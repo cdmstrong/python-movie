@@ -3,7 +3,7 @@
 from flask import *
 from datetime import datetime
 import database
-
+from dateutil.parser import parse
 user_details = {}
 session = {}
 page = {}
@@ -84,6 +84,7 @@ def list_movie():
     if (request.method == 'GET'):
         # First check if specific movie
         movie_list = database.findMoviesByStaff(user_details['login'])
+        print(movie_list)
         if (movie_list is None):
             movie_list = []
             flash("There are no movies in the system for " + user_details['firstname'] + " " + user_details['lastname'])
@@ -94,7 +95,7 @@ def list_movie():
     elif (request.method == 'POST'):
         search_term = request.form['search']
         if (search_term == ''):
-            movie_list_find = database.findMoviesByStaff(user_details['login'])
+            movie_list_find = database.findMoviesByCriteria(search_term)
         else:    
             movie_list_find = database.findMoviesByCriteria(search_term)
         if (movie_list_find is None):
@@ -117,14 +118,15 @@ def new_movie():
     if(request.method == 'GET'):
         times = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
         return render_template('new_movie.html', user=user_details, times=times, session=session, page=page)
-
+    
 	# If we're adding a new movie
     success = database.addMovie(request.form['title'],
                                  request.form['releasedate'],
                                  request.form['genre1'],
                                  request.form['genre2'],
                                  request.form['staff'],
-                                 request.form['description'])
+                                 request.form['description']
+                                 )
     if(success == True):
         page['bar'] = True
         flash("Movie added!")
@@ -150,7 +152,7 @@ def update_movie():
         movie = {
             'movie_id': request.args.get('movie_id'),
             'title': request.args.get('title'),
-            'releasedate': datetime.strptime(request.args.get('releasedate'), '%d-%m-%Y').date(),
+            'releasedate': parse(request.args.get('releasedate')).date(),
             'avgrating': request.args.get('avgrating'),
             'genre1': request.args.get('genre').split(",")[0],
             'genre2': genre2,

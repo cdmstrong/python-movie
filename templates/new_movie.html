@@ -15,12 +15,13 @@
             </div>
             <div class="pure-control-group">
                 <label for="genre1">Primary Genre:</label>
-                <input type="text" name="genre1" size="25" required>
+                <input type="text" name="genre1" size="25" pattern="^([1-9]|1[1-9]|20)$" required>
             </div>
             <div class="pure-control-group">
                 <label for="genre2">Secondary Genre:</label>
-                <input type="text" name="genre2" size="25">
+                <input type="text" name="genre2" pattern="^([1-9]|1[1-9]|20)$" size="25">
             </div>
+            
             <div class="pure-control-group">
                 <label for="staff">Managed By:</label>
                 <input type="text" name="staff" size="25" required>

@@ -19,15 +19,15 @@
 			</div>
             <div class="pure-control-group">
                 <label for="avgrating">Avg Rating:</label>
-				<input type="text" name="avgrating" value="{{ movieInfo.avgrating }}" size="25" required>
+				<input type="text" name="avgrating" value="{{ movieInfo.avgrating }}" pattern="^[0-5](\.[0-9])?$"  size="25" required>
             </div>
 			<div class="pure-control-group">
                 <label for="genre1">Primary Genre:</label>
-				<input type="text" name="genre1" value="{{ movieInfo.genre1 }}" size="25" required>
+				<input type="text" name="genre1" value="{{ movieInfo.genre1 }}" pattern="^([1-9]|1[1-9]|20)$" size="25" required>
             </div>
 			<div class="pure-control-group">
                 <label for="genre2">Secondary Genre:</label>
-				<input type="text" name="genre2" value="{{ movieInfo.genre2 }}" size="25">
+				<input type="text" name="genre2" value="{{ movieInfo.genre2 }}"  pattern="^([1-9]|1[1-9]|20)$" size="25">
             </div>
             <div class="pure-control-group">
                 <label for="staff">Managed By:</label>
